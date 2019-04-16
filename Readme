@@ -1,0 +1,41 @@
+#To create a docker image from Dockerfile
+docker build -t vkthumati/helloworlddocker . (Note: .(dot) indicates current directory where Dockerfile existed)
+
+#To run a docker container
+docker run -p 8080:8080 -t vkthumati/gs-spring-boot-docker
+
+#Debugging the application in a Docker container
+docker run -e "JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=5005,server=y,suspend=n" -p 8080:8080 -p 5005:5005 -t vkthumati/gs-spring-boot-docker
+
+#To login into docker container which is already running
+docker exec -it containerId /bin/sh(if it is not bash shell)
+docker exec -it containerId /bin/bash (if it is bash shell)
+
+#If you want to poke around inside the image you can open a shell in it like this (the base image does not have bash)
+docker run -ti --entrypoint /bin/sh myorg/myapp
+
+#To Stop Docker Container
+docker stop conatainerId
+
+#To login into docker hub
+docker login
+
+#To push into docker hub
+docker push vkthumati/gs-spring-boot-docker
+
+#To login into 
+cf login -a api.cf1.ic.deere.com -u vt07957
+password>enter password
+Space>devl
+
+#To push into cloudfoundry
+cf push gs-spring-boot-docker --docker-image vkthumati/gs-spring-boot-docker
+
+#To Login into CF docker container
+cf ssh gs-spring-boot-docker -i 0
+
+#To delete app in CF
+cf delete gs-spring-boot-docker
+
+#To delete route in CF
+cf delete-route cf1.ic.deere.com --hostname gs-spring-boot-docker
